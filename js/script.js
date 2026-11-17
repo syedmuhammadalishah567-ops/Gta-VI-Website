@@ -112,6 +112,21 @@
     }
   }
 
+  /* ---------- Trailers (click-to-play YouTube facade) ---------- */
+  document.querySelectorAll(".video-card").forEach(function (card) {
+    var playBtn = card.querySelector(".video-play");
+    var ytId = card.getAttribute("data-yt-id");
+    if (!playBtn || !ytId) return;
+    playBtn.addEventListener("click", function () {
+      var iframe = document.createElement("iframe");
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + ytId + "?autoplay=1&rel=0";
+      iframe.title = playBtn.getAttribute("aria-label") || "YouTube video player";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      playBtn.replaceWith(iframe);
+    });
+  });
+
   /* ---------- Gallery lightbox ---------- */
   var lightbox = document.getElementById("lightbox");
   var lightboxImg = document.getElementById("lightboxImg");
